@@ -2,7 +2,8 @@ import {useEffect, useState} from 'react';
 import Persmissions from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 
-export const useLocation = () => {
+const useLocation = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [location, setLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -29,6 +30,7 @@ export const useLocation = () => {
             latitude: data.coords.latitude,
             longitude: data.coords.longitude,
           });
+          setLoading(false);
         },
         error => {
           console.log(error.message);
@@ -37,8 +39,6 @@ export const useLocation = () => {
           distanceFilter: 100,
         },
       );
-
-      // setLocation({latitude, longitude});
     } catch (error) {
       console.log(error);
     }
@@ -48,5 +48,7 @@ export const useLocation = () => {
     getLocation();
   }, []);
 
-  return location;
+  return {location, loading};
 };
+
+export default useLocation;
