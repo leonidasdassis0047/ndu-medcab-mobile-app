@@ -24,8 +24,18 @@ const signUp = (userDetails: {
 
 const getCurrentUser = () => apiClient.get(RESOURCE_ROUTE + '/me');
 
+const getUserLocationDetails = (location: {
+  latitude: number;
+  longitude: number;
+}) =>
+  apiClient.get(RESOURCE_ROUTE + '/location', {
+    lat: location.latitude,
+    lng: location.longitude,
+  });
+
 export default {
   getCurrentUser,
+  getUserLocationDetails,
   signIn,
   signUp,
 };
