@@ -31,7 +31,7 @@ const Header: React.FC<Props> = ({location}) => {
           {location?.longitude.toPrecision(4)}
         </Text>
       </View>
-      <Text style={{fontFamily: fonts.bold}}>{auth.user.username}</Text>
+      <Text style={{fontFamily: fonts.semiBold}}>{auth.user.username}</Text>
       <View style={styles.avatar}>
         <Image
           style={{width: '100%', height: '100%'}}

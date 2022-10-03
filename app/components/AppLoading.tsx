@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import LottieView from 'lottie-react-native';
 
 import colors from '../config/colors';
@@ -17,7 +17,7 @@ const AppLoading: React.FC<Props> = ({onFinish, startAsync}) => {
       setTimeout(async () => {
         await startAsync();
         onFinish();
-      }, 3000);
+      }, 1500);
     } catch (error: any) {
       console.log(error.message);
     }

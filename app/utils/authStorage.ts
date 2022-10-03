@@ -27,7 +27,7 @@ const removeToken = async () => {
   }
 };
 
-const getUser = async (): Promise<null> => {
+const getUser = async (): Promise<null | {}> => {
   const authToken = await getToken();
   return authToken ? jwtDecode(authToken) : null;
 };

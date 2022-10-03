@@ -7,7 +7,7 @@ import {fonts} from '../../../config';
 const PaymentSection = () => {
   return (
     <View>
-      <Text style={styles.instruction}>Payment</Text>
+      <Text style={styles.instruction}>Cash on Delivery</Text>
     </View>
   );
 };

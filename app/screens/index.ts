@@ -6,6 +6,7 @@ export {default as OrderSuccessScreen} from './cart/OrderSuccess';
 // home/explore screens
 export {default as ExploreScreen} from './explore/Explore';
 export {default as MedicalStoreScreen} from './explore/MedicalStore';
+export {default as DetailsScreen} from './explore/Details';
 
 // orders screens
 export {default as OrdersScreen} from './orders/Orders';

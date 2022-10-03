@@ -22,12 +22,12 @@ import {colors} from '../../config/';
 // import SearchStores from '../../components/explore/SearchStores';
 import Categories from './components/Categories';
 import Iconicons from 'react-native-vector-icons/Ionicons';
-import {IProduct, IStore} from '../../utils/types';
-
 import {useDispatch} from 'react-redux';
-import {getStore} from '../../apis/stores';
 
 import {addItemToCart} from '../../stores/cart/cartSlice';
+import {IProduct, IStore} from '../../utils/types';
+import {useApi} from '../../hooks';
+import storesApis from '../../apis/stores';
 
 type Props = NativeStackScreenProps<ExploreStackParamList, 'MedicalStore'> & {};
 
@@ -36,16 +36,18 @@ const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const MedicalStore: React.FC<Props> = ({route}) => {
   const [store, setStore] = useState<IStore | null>(null);
   const [inventory, setInventory] = useState<Array<IProduct>>([]);
+  const storeDetailsApi = useApi(storesApis.getStore);
 
   const {_id: storeId} = route.params;
 
   const fetchStoreDetails = async () => {
-    const result = await getStore(storeId);
-
-    if (result) {
-      setStore(result as unknown as IStore);
-      setInventory(result.inventory);
+    const response = await storeDetailsApi.request(storeId);
+    if (!response.ok) {
+      return;
     }
+
+    setStore(response.data.data);
+    setInventory(response.data.data?.inventory);
   };
 
   useEffect(() => {

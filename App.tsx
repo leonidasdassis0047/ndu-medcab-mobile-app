@@ -7,10 +7,7 @@ import {AuthContext} from './app/context/AuthContext';
 import authStorage from './app/utils/authStorage';
 import {AppLoading, AppStatusBar, OfflineNotice} from './app/components';
 import AuthNavigation from './app/navigation/AuthNavigation';
-import AccountStack from './app/navigation/AccountStack';
-import ExploreStack from './app/navigation/ExploreStack';
-import OrdersStack from './app/navigation/OrdersStack';
-import CartStack from './app/navigation/CartStack';
+
 import {store} from './app/stores';
 import {Provider} from 'react-redux';
 import {MainNavigation} from './app/navigation';

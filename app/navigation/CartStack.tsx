@@ -4,7 +4,9 @@ import {CartScreen, CheckoutScreen, OrderSuccessScreen} from '../screens';
 
 export type CartStackParamList = {
   Cart: undefined;
-  Checkout: undefined;
+  Checkout: {
+    user: any;
+  };
   OrderSuccess: undefined;
   Explore: undefined;
 };

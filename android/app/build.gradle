@@ -134,6 +134,10 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.medcab"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -259,6 +263,7 @@ dependencies {
     implementation project(':react-native-vector-icons')
     implementation project(':@react-native-async-storage')
     implementation project(':react-native-permissions')
+    implementation project(':react-native-linear-gradient')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

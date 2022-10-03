@@ -1,15 +1,19 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 
 import {ScreenWrapper, Text} from '../../components';
 import Header from './components/Header';
 import NearbyStores from './components/NearbyStores';
 import {colors} from '../../config/';
 
-import {useLocation} from '../../hooks/useLocation';
+import {useLocation} from '../../hooks/';
+import SearchStores from './components/SearchStores';
+import ExplorationCard from './components/ExplorationCard';
+
+import data from '../../assets/data/db';
 
 const Explore = () => {
-  const location = useLocation();
+  const {location} = useLocation();
 
   return (
     <ScreenWrapper
@@ -31,31 +35,13 @@ const Explore = () => {
       </View>
 
       {/* Search and filtering */}
-      {/* <SearchStores /> */}
+      <SearchStores />
 
       {/* quick choose */}
-      <View style={{width: '100%', height: 80, marginVertical: 4}}>
-        <ScrollView
-          horizontal
-          contentContainerStyle={{
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-          }}
-          style={{
-            width: '100%',
-            height: '100%',
-            backgroundColor: colors.card,
-          }}>
-          <View style={styles.cardContainer}>
-            <Text style={{textAlign: 'center'}}>HIV & Tests</Text>
-          </View>
-          <View style={styles.cardContainer}>
-            <Text>Pregnancy</Text>
-          </View>
-          <View style={styles.cardContainer}>
-            <Text style={{textAlign: 'center'}}>Sexual harrasment</Text>
-          </View>
-        </ScrollView>
+      <View style={styles.explorationCardsContainer}>
+        {data.categories.map((item: {id: string; title: string}) => {
+          return <ExplorationCard key={item.id} item={item} />;
+        })}
       </View>
 
       {/* Categorizations of Drugs and medicines. */}
@@ -100,13 +86,13 @@ const styles = StyleSheet.create({
     // opacity: 0.9,
   },
 
-  cardContainer: {
-    width: 100,
-    height: 64,
-    backgroundColor: colors.white,
-    borderRadius: 4,
-    justifyContent: 'center',
+  explorationCardsContainer: {
+    width: '100%',
+    height: 100,
+    marginVertical: 4,
+    paddingVertical: 2,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 12,
+    justifyContent: 'space-around',
   },
 });

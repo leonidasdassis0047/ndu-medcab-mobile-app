@@ -29,9 +29,12 @@ import {createOrder} from '../../stores/orders/ordersSlice';
 
 type Props = NativeStackScreenProps<CartStackParamList, 'Checkout'> & {};
 
-const Checkout: React.FC<Props> = ({navigation}) => {
+const Checkout: React.FC<Props> = ({navigation, route}) => {
   const cart = useSelector((state: AppStoreRootState) => state.cart);
   const dispatch = useDispatch();
+
+  const user = route.params.user;
+  console.log(user);
 
   return (
     <ScreenWrapper withStatusBar>
@@ -53,7 +56,7 @@ const Checkout: React.FC<Props> = ({navigation}) => {
           <ProgressStep
             label="Shipping"
             scrollViewProps={{paddingHorizontal: 16}}>
-            <ShippingSection />
+            <ShippingSection user={user} />
           </ProgressStep>
 
           {/* payment */}

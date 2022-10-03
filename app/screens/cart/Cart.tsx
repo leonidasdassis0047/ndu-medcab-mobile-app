@@ -14,14 +14,16 @@ import {clearCart} from '../../stores/cart/cartSlice';
 import Header from './components/Header';
 import {CartStackParamList} from '../../navigation/CartStack';
 import PricesSection from './components/PricesSection';
+import {useApi} from '../../hooks';
+import authApis from '../../apis/auth';
 
 type Props = NativeStackScreenProps<CartStackParamList, 'Checkout'> & {};
 
 const Cart: React.FC<Props> = ({navigation}) => {
   const cart = useSelector((state: AppStoreRootState) => state.cart);
-  const auth = useSelector((state: AppStoreRootState) => state.auth);
-
   const dispatch = useDispatch();
+
+  const userDetailsApi = useApi(authApis.getCurrentUser);
 
   return (
     <Fragment>
@@ -44,17 +46,19 @@ const Cart: React.FC<Props> = ({navigation}) => {
               style={styles.clearText}>
               Clear
             </Text>
+
             <Button
               text="Checkout"
               style={styles.checkoutButton}
-              onPress={() => {
-                // check auth before proceeding
-                if (!auth.token) {
-                  // dispatch auth navigation
-                  // return;
+              onPress={async () => {
+                const response = await userDetailsApi.request();
+                console.log(response.data);
+                if (!response.ok) {
+                  return;
                 }
-
-                navigation.navigate('Checkout');
+                const user = response.data;
+                console.log('user details', user);
+                navigation.navigate('Checkout', {user});
               }}
             />
           </RowContainer>

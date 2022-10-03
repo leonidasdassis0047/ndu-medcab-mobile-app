@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {ExploreScreen, MedicalStoreScreen} from '../screens';
+import {DetailsScreen, ExploreScreen, MedicalStoreScreen} from '../screens';
 
 export type ExploreStackParamList = {
   Explore: undefined;
@@ -10,6 +10,9 @@ export type ExploreStackParamList = {
   };
   MedicineDetails: {
     _id: string;
+  };
+  Details: {
+    item: any;
   };
   CategoryDetails: {
     _id?: string;
@@ -25,10 +28,7 @@ const ExploreStack = () => {
     <ExploreStackNavigator.Navigator
       screenOptions={{headerShown: false, animation: 'slide_from_right'}}>
       <ExploreStackNavigator.Screen name="Explore" component={ExploreScreen} />
-      {/* <ExploreStackNavigator.Screen
-        name="MedicineDetails"
-        component={MedicineDetails}
-      /> */}
+      <ExploreStackNavigator.Screen name="Details" component={DetailsScreen} />
       <ExploreStackNavigator.Screen
         name="MedicalStore"
         component={MedicalStoreScreen}

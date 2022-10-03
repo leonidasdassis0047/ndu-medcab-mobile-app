@@ -15,10 +15,13 @@ import {useNavigation} from '@react-navigation/native';
 import {ExploreStackParamList} from '../../../navigation/ExploreStack';
 
 import {IStore} from '../../../utils/types';
-import {getStores} from '../../../apis/stores';
+import storesApis from '../../../apis/stores';
+import {useApi, useLocation} from '../../../hooks';
 
 const NearbyStores = () => {
   const [stores, setStores] = useState<Array<IStore>>([]);
+  const nearByStoreApi = useApi(storesApis.fetchNearbyStores);
+  const {location} = useLocation();
 
   const navigation =
     useNavigation<
@@ -31,20 +34,27 @@ const NearbyStores = () => {
     });
   };
 
-  const fetchNearByStores = () => {
-    getStores().then(response => {
-      if (response) {
-        setStores(response);
+  const fetchNearByStores = React.useCallback(async () => {
+    try {
+      const response = await nearByStoreApi.request({
+        distance: 10000,
+        lat: location?.latitude,
+        lng: location?.longitude,
+      });
+
+      if (!response.ok) {
+        return;
       }
-    });
-  };
+      setStores(response.data.results);
+    } catch (error: any) {
+      console.log('error', error);
+    }
+  }, [nearByStoreApi, location]);
 
   useEffect(() => {
     fetchNearByStores();
-    return () => {
-      setStores([]);
-    };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   return (
     <View style={styles.container}>
@@ -52,67 +62,68 @@ const NearbyStores = () => {
       <ScrollView
         contentContainerStyle={{backgroundColor: 'white'}}
         style={{flex: 1}}>
-        {stores.map(store => (
-          <TouchableOpacity
-            activeOpacity={0.9}
-            onPress={() => {
-              handlePress(store.id);
-            }}
-            style={styles.card}
-            key={store.id.toString()}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <View style={styles.cover}>
-                <Image
-                  source={{
-                    uri: store.cover_image,
-                  }}
-                  style={{width: '100%', height: '100%'}}
-                />
-              </View>
-              <View style={{flex: 1, paddingLeft: 8}}>
-                <Text style={{fontSize: 15, marginBottom: 8}}>
-                  {store?.name}
-                </Text>
+        {stores &&
+          stores.map(store => (
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => {
+                handlePress(store.id);
+              }}
+              style={styles.card}
+              key={store.id.toString()}>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View style={styles.cover}>
+                  <Image
+                    source={{
+                      uri: store.cover_image,
+                    }}
+                    style={{width: '100%', height: '100%'}}
+                  />
+                </View>
+                <View style={{flex: 1, paddingLeft: 8}}>
+                  <Text style={{fontSize: 15, marginBottom: 8}}>
+                    {store?.name}
+                  </Text>
 
-                <Text style={{fontSize: 13, fontWeight: '300'}}>
-                  25-35 mins {'\u25CF'} 2km away
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontWeight: '400',
-                    marginBottom: 4,
-                    color: colors.gray.dark,
-                  }}>
-                  6346, City Square, Kampala
-                </Text>
+                  <Text style={{fontSize: 13, fontWeight: '300'}}>
+                    25-35 mins {'\u25CF'} 2km away
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontWeight: '400',
+                      marginBottom: 4,
+                      color: colors.gray.dark,
+                    }}>
+                    6346, City Square, Kampala
+                  </Text>
 
-                <RowContainer style={{marginTop: 4}}>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Ionicons
-                      name="ios-compass-outline"
-                      size={14}
-                      color={colors.accent}
-                    />
-                    <Text
-                      style={{
-                        fontSize: 13,
-                        marginLeft: 4,
-                        color: colors.gray.dark,
-                      }}>
-                      Live tracking
-                    </Text>
-                  </View>
-                  {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <RowContainer style={{marginTop: 4}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Ionicons
+                        name="ios-compass-outline"
+                        size={14}
+                        color={colors.accent}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          marginLeft: 4,
+                          color: colors.gray.dark,
+                        }}>
+                        Live tracking
+                      </Text>
+                    </View>
+                    {/* <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <View style={styles.dot} />
                     <Text style={{fontSize: 14, marginLeft: 8}}>Open</Text>
                   </View> */}
-                </RowContainer>
+                  </RowContainer>
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </ScrollView>
     </View>
   );

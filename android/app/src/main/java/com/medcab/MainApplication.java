@@ -16,6 +16,7 @@ import java.util.List;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.zoontek.rnpermissions.RNPermissionsPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new AsyncStoragePackage());
           // packages.add(new VectorIconsPackage());
           // packages.add(new RNPermissionsPackage());
+          // packages.add(new LinearGradientPackage());
           return packages;
         }
 
