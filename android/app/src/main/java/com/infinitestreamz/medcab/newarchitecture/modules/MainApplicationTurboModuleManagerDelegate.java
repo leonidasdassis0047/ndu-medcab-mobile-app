@@ -1,4 +1,4 @@
-package com.medcab.newarchitecture.modules;
+package com.infinitestreamz.medcab.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

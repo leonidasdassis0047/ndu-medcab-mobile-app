@@ -1,4 +1,4 @@
-package com.medcab.newarchitecture.components;
+package com.infinitestreamz.medcab.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -139,7 +139,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.medcab"
+        applicationId "com.infinitestreamz.medcab"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
